@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مغامرات الدراسات الاجتماعية - الصف الرابع</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: #f0f9ff;
+        }
+        .card {
+            background-color: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 2px solid #60a5fa;
+        }
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 30px -10px rgba(0, 0, 0, 0.2);
+        }
+        h1, h2, h3 {
+            color: #1e3a8a;
+            font-weight: 800;
+        }
+        .btn-primary {
+            background: linear-gradient(45deg, #3b82f6, #60a5fa);
+            color: white;
+            padding: 12px 28px;
+            border-radius: 12px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+        }
+        .btn-primary:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4);
+        }
+        .correct-answer {
+            background-color: #dcfce7;
+            border: 2px solid #22c55e;
+        }
+        .wrong-answer {
+            background-color: #fee2e2;
+            border: 2px solid #ef4444;
+        }
+        .draggable {
+            cursor: grab;
+            transition: transform 0.2s;
+        }
+        .dragging {
+            opacity: 0.5;
+            transform: scale(1.1);
+            z-index: 1000;
+            position: relative;
+        }
+        .drop-target {
+            border: 3px dashed #93c5fd;
+            transition: background-color 0.3s, border-color 0.3s;
+            min-height: 120px;
+        }
+        .drop-target.hovered {
+            background-color: #dbeafe;
+            border-color: #3b82f6;
+        }
+         .drop-target.correct-drop {
+            border-color: #22c55e;
+            background-color: #dcfce7;
+        }
+        .img-cover {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .video-placeholder {
+            position: relative;
+            cursor: pointer;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        .video-placeholder .play-icon {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 60px;
+            height: 60px;
+            background-color: rgba(0, 0, 0, 0.6);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: transform 0.2s ease;
+        }
+        .video-placeholder:hover .play-icon {
+            transform: translate(-50%, -50%) scale(1.1);
+        }
+    </style>
+</head>
+<body class="antialiased text-gray-800">
+ 
+    <!-- Container الرئيسي -->
+    <div class="container mx-auto p-4 md:p-8 max-w-5xl">
+ 
+        <!-- Header -->
+        <header class="text-center mb-12">
+            <h1 class="text-4xl md:text-5xl font-bold mb-2">أهلاً بكم يا أبطال وبطلات الصف الرابع! 👋</h1>
+            <p class="text-xl text-gray-600">مرحباً في عالم "الدراسات الاجتماعية" المليء بالمغامرات والاكتشافات!</p>
+        </header>
+ 
+        <main class="space-y-12">
+            <!-- قسم المقدمة -->
+            <section class="card">
+                <h2 class="text-3xl font-bold text-center mb-6">🤔 ما هي مادة الدراسات الاجتماعية؟</h2>
+                <p class="text-lg leading-relaxed mb-4">ببساطة، هي المادة التي ستأخذنا في رحلة مدهشة لنتعرف على كل شيء حولنا. سنتعلم فيها عن:</p>
+                <ul class="space-y-3 text-lg list-inside">
+                    <li class="flex items-start"><span class="text-2xl ml-3">📜</span> <div><span class="font-bold">حكايات من الماضي:</span> سنكتشف قصص أجدادنا العظماء وكيف كانوا يعيشون.</div></li>
+                    <li class="flex items-start"><span class="text-2xl ml-3">🤝</span> <div><span class="font-bold">كيف نكون مواطنين صالحين:</span> سنتعلم كيف نحب وطننا ونحافظ عليه.</div></li>
+                </ul>
+                <div class="mt-6">
+                    <h3 class="text-2xl font-bold text-center mb-4">الفترات التي مر بها تاريخ مصر</h3>
+                     <div id="video-placeholder-history">
+                        <a href="#" onclick="playVideo('history', '1bhcqt')" class="video-placeholder block">
+                            <img src="https://placehold.co/600x400/1e3a8a/ffffff?text=فيديو+تاريخ+مصر" alt="شاهد فيديو تاريخ مصر" class="w-full h-auto rounded-lg">
+                            <div class="play-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg>
+                            </div>
+                            <p class="text-center font-bold mt-2 text-blue-700">اضغط هنا لمشاهدة الفيديو</p>
+                        </a>
+                     </div>
+                     <div id="video-container-history" class="hidden aspect-video w-full mt-4">
+                        <!-- Iframe will be inserted here by JS -->
+                     </div>
+                </div>
+                <p class="mt-6 text-center text-xl font-semibold bg-blue-100 p-4 rounded-xl">الدراسات الاجتماعية هي مفتاح فهم عالمنا وحياتنا اليومية. هيا بنا نبدأ رحلتنا الممتعة! 🚀</p>
+            </section>
+            
+            <!-- قسم الخريطة والفيديو -->
+            <section class="card">
+                <h2 class="text-3xl font-bold text-center mb-6">🗺️ ما هي الخريطة؟ وكيف نستخدمها كل يوم؟</h2>
+                <div class="grid md:grid-cols-2 gap-8 items-center">
+                    <div>
+                        <h3 class="font-bold text-center mb-2">خريطة بسيطة لوطننا مصر</h3>
+                        <img src="https://i.postimg.cc/5ytb2MXT/Gemini-Generated-Image-wles3awles3awles.png" alt="خريطة بسيطة لمصر توضح أهم المدن" class="w-full h-auto rounded-lg border-2 border-blue-300">
+                    </div>
+                    <div class="space-y-6">
+                        <p class="text-lg leading-relaxed">الخريطة هي <span class="font-bold text-blue-600">رسم للأرض من الأعلى</span>. وهي تساعدنا في أشياء كثيرة جدًا!</p>
+                        
+                        <div>
+                            <h3 class="font-bold text-center mb-2">شاهد فيديو الأقمار الصناعية</h3>
+                             <div id="video-placeholder-satellite">
+                                <a href="#" onclick="playVideo('satellite', '2mbcec')" class="video-placeholder block">
+                                    <img src="https://placehold.co/600x400/2563eb/ffffff?text=فيديو+الأقمار+الصناعية" alt="شاهد فيديو الأقمار الصناعية" class="w-full h-auto rounded-lg">
+                                    <div class="play-icon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg>
+                                    </div>
+                                    <p class="text-center font-bold mt-2 text-blue-700">اضغط هنا لمشاهدة الفيديو</p>
+                                </a>
+                            </div>
+                            <div id="video-container-satellite" class="hidden aspect-video w-full mt-4">
+                               <!-- Iframe will be inserted here by JS -->
+                            </div>
+                        </div>
+                        
+                        <!-- لعبة مكتشف الفضاء -->
+                        <div class="mt-4 p-4 bg-gray-50 rounded-lg">
+                            <h3 class="font-bold text-center text-xl mb-2">لعبة: مكتشف الفضاء 🛰️</h3>
+                            <p class="text-sm text-center mb-3">بعد مشاهدة الفيديو، هل يمكنك استنتاج 3 استخدامات مهمة للأقمار الصناعية؟</p>
+                            <div class="space-y-2">
+                                <input type="text" class="w-full p-2 border border-gray-300 rounded-lg" placeholder="الاستخدام الأول...">
+                                <input type="text" class="w-full p-2 border border-gray-300 rounded-lg" placeholder="الاستخدام الثاني...">
+                                <input type="text" class="w-full p-2 border border-gray-300 rounded-lg" placeholder="الاستخدام الثالث...">
+                            </div>
+                            <button onclick="showSatelliteUses()" class="btn-primary mt-3 w-full text-sm py-2">أظهر الإجابات المقترحة</button>
+                            <div id="satellite-answers" class="hidden mt-3 p-3 bg-yellow-100 text-sm border-r-4 border-yellow-500 rounded">
+                                <h4 class="font-bold">إجابات مقترحة:</h4>
+                                <ul class="list-disc list-inside">
+                                    <li>تحديد المواقع (GPS)</li>
+                                    <li>بث القنوات التليفزيونية</li>
+                                    <li>الاتصالات والإنترنت</li>
+                                    <li>مراقبة الطقس</li>
+                                </ul>
+                            </div>
+                        </div>
+ 
+                         <div>
+                            <h3 class="font-bold text-center mb-2">وكيف يعمل الـ GPS؟</h3>
+                            <div id="video-placeholder-gps">
+                                <a href="#" onclick="playVideo('gps', 'o5v9ca')" class="video-placeholder block">
+                                    <img src="https://placehold.co/600x400/3b82f6/ffffff?text=فيديو+GPS" alt="شاهد فيديو GPS" class="w-full h-auto rounded-lg">
+                                    <div class="play-icon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg>
+                                    </div>
+                                    <p class="text-center font-bold mt-2 text-blue-700">اضغط هنا لمشاهدة الفيديو</p>
+                                </a>
+                            </div>
+                             <div id="video-container-gps" class="hidden aspect-video w-full mt-4">
+                                <!-- Iframe will be inserted here by JS -->
+                             </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+ 
+            <!-- قسم الألعاب -->
+            <section>
+                <h2 class="text-3xl font-bold text-center mb-8">🎉 لنكمل اللعب والمرح! 🎉</h2>
+                <div class="grid md:grid-cols-2 gap-8">
+                    <!-- اللعبة الأولى -->
+                    <div class="card">
+                        <h3 class="text-2xl font-bold mb-4">اللعبة الأولى: تحدي المستكشف الذكي 🕵️‍♂️</h3>
+                        <p class="mb-4">انظر جيدًا إلى الصورتين لمدينتنا... واحدة من الماضي والأخرى من الحاضر. هل يمكنك إيجاد 3 اختلافات بينهما؟</p>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+                            <div>
+                                <h4 class="font-bold text-center mb-2">المدينة قديمًا</h4>
+                                <img src="https://i.postimg.cc/Hn3JwX8s/Gemini-Generated-Image-v1xni2v1xni2v1xn.png" alt="صورة للمدينة قديماً" class="img-cover">
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-center mb-2">المدينة حديثًا</h4>
+                                <img src="https://i.postimg.cc/VNbbxJpD/Gemini-Generated-Image-v1xni2v1xni2v1xn-1.png" alt="صورة للمدينة حديثاً" class="img-cover">
+                            </div>
+                        </div>
+                        <textarea id="differences" class="w-full p-2 border border-gray-300 rounded-lg" rows="3" placeholder="اكتب الاختلافات هنا..."></textarea>
+                        <button onclick="showDifferences()" class="btn-primary mt-4">أظهر الإجابات</button>
+                        <div id="diff-answers" class="hidden mt-4 p-3 bg-yellow-100 border-r-4 border-yellow-500 rounded">
+                            <h4 class="font-bold">الإجابات المقترحة:</h4>
+                            <ul class="list-disc list-inside">
+                                <li>المباني كانت بسيطة وتراثية وأصبحت حديثة وزجاجية.</li>
+                                <li>الطرق كانت ضيقة ومرصوفة بالحجارة وأصبحت واسعة جداً وممهدة.</li>
+                                <li>الإضاءة كانت بالفوانيس وأصبحت أعمدة إنارة حديثة.</li>
+                            </ul>
+                        </div>
+                    </div>
+ 
+                    <!-- اللعبة الثانية -->
+                    <div class="card">
+                        <h3 class="text-2xl font-bold mb-4">اللعبة الثانية: لغز المسافر عبر الزمن ⏳</h3>
+                        <p class="mb-4">اسحب كل أداة حديثة وضعها بجانب شكلها القديم لتساعد المسافر عبر الزمن!</p>
+                        
+                        <div class="space-y-4">
+                            <div class="flex items-center gap-4">
+                                <img src="https://i.postimg.cc/mrcLQ4Vs/Gemini-Generated-Image-a3wfyya3wfyya3wf.png" alt="قطار قديم" class="w-24 h-24 object-cover rounded-lg">
+                                <div id="drop-train" data-match="train" class="w-full flex items-center justify-center bg-gray-50 rounded-lg drop-target"><span class="text-gray-400">اسحب القطار الحديث إلى هنا</span></div>
+                            </div>
+                            <div class="flex items-center gap-4">
+                                <img src="https://i.postimg.cc/L8xkJtQW/Gemini-Generated-Image-7jkwnh7jkwnh7jkw.png" alt="هاتف قديم" class="w-24 h-24 object-cover rounded-lg">
+                                <div id="drop-phone" data-match="phone" class="w-full flex items-center justify-center bg-gray-50 rounded-lg drop-target"><span class="text-gray-400">اسحب الهاتف الحديث إلى هنا</span></div>
+                            </div>
+                        </div>
+                        
+                        <hr class="my-6">
+ 
+                        <p class="text-center font-bold mb-2">الأدوات الحديثة (اسحبها للأعلى)</p>
+                        <div class="flex justify-around items-center bg-blue-50 p-4 rounded-lg">
+                            <img id="drag-train" data-match="train" src="https://i.postimg.cc/yxC81Gmz/Gemini-Generated-Image-a3wfyya3wfyya3wf-1.png" alt="القطار الكهربائي السريع في مصر" class="w-32 h-20 object-contain draggable" draggable="true">
+                            <img id="drag-phone" data-match="phone" src="https://i.postimg.cc/YqwzZqmd/Gemini-Generated-Image-7jkwnh7jkwnh7jkw-1.png" alt="هاتف ذكي حديث" class="w-24 h-20 object-contain draggable" draggable="true">
+                        </div>
+                        <div id="game2-feedback" class="text-center font-bold text-green-600 mt-4 text-xl"></div>
+                    </div>
+                </div>
+            </section>
+ 
+            <!-- قسم الاختبار -->
+            <section class="card">
+                <h2 class="text-3xl font-bold text-center mb-6">🧠 اختبار الأبطال الصغير (للتشويق فقط!)</h2>
+                <p class="text-center text-lg mb-8">هيا نختبر معلوماتنا الجديدة بـ 10 أسئلة سهلة وممتعة! اختر الإجابة الصحيحة.</p>
+                <div id="quiz-container" class="space-y-6">
+                    <!-- سيتم إدخال الأسئلة هنا بواسطة جافاسكريبت -->
+                </div>
+                <div class="text-center mt-8">
+                    <button onclick="checkQuiz()" class="btn-primary">تحقق من إجاباتي</button>
+                    <div id="quiz-result" class="mt-6 text-2xl font-bold"></div>
+                </div>
+            </section>
+        </main>
+    </div>
+ 
+    <script>
+        // --- حماية المحتوى ---
+        document.addEventListener('contextmenu', event => event.preventDefault());
+        document.onkeydown = function(e) {
+            if (e.keyCode == 123) { return false; } // F12
+            if (e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)) { return false; } // Ctrl+Shift+I
+            if (e.ctrlKey && e.shiftKey && e.keyCode == 'J'.charCodeAt(0)) { return false; } // Ctrl+Shift+J
+            if (e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)) { return false; } // Ctrl+U
+        };
+ 
+        // --- Video Player Logic for GitHub Pages ---
+        function playVideo(videoId, streamableId) {
+            event.preventDefault();
+            const placeholder = document.getElementById(`video-placeholder-${videoId}`);
+            const container = document.getElementById(`video-container-${videoId}`);
+            
+            if (placeholder && container) {
+                // Construct the correct embed URL for Streamable and create the iframe
+                const embedUrl = `https://streamable.com/e/${streamableId}?autoplay=1&muted=0`;
+                container.innerHTML = `<iframe src="${embedUrl}" frameborder="0" width="100%" height="100%" allowfullscreen allow="autoplay"></iframe>`;
+                
+                // Hide placeholder and show the video container
+                placeholder.classList.add('hidden');
+                container.classList.remove('hidden');
+            }
+        }
+ 
+        // --- اللعبة الأولى: تحدي المستكشف الذكي ---
+        function showDifferences() {
+            document.getElementById('diff-answers').classList.toggle('hidden');
+        }
+ 
+        // --- لعبة مكتشف الفضاء ---
+        function showSatelliteUses() {
+            document.getElementById('satellite-answers').classList.toggle('hidden');
+        }
+ 
+        // --- اللعبة الثانية: لغز المسافر عبر الزمن (السحب والإفلات) ---
+        function initializeDragAndDrop() {
+            let draggedItem = null;
+ 
+            document.querySelectorAll('.draggable').forEach(item => {
+                item.addEventListener('dragstart', (e) => {
+                    draggedItem = e.target;
+                    setTimeout(() => e.target.classList.add('opacity-50'), 0);
+                });
+ 
+                item.addEventListener('dragend', (e) => {
+                    setTimeout(() => e.target.classList.remove('opacity-50'), 0);
+                    draggedItem = null;
+                });
+            });
+ 
+            document.querySelectorAll('.drop-target').forEach(target => {
+                target.addEventListener('dragover', (e) => {
+                    e.preventDefault();
+                    target.classList.add('hovered');
+                });
+ 
+                target.addEventListener('dragleave', () => {
+                    target.classList.remove('hovered');
+                });
+ 
+                target.addEventListener('drop', (e) => {
+                    e.preventDefault();
+                    target.classList.remove('hovered');
+                    if (draggedItem && target.dataset.match === draggedItem.dataset.match) {
+                        target.innerHTML = '';
+                        target.appendChild(draggedItem);
+                        draggedItem.setAttribute('draggable', 'false');
+                        draggedItem.style.cursor = 'default';
+                        target.classList.add('correct-drop');
+ 
+                        if (document.querySelectorAll('.correct-drop').length === 2) {
+                            document.getElementById('game2-feedback').innerText = 'أحسنت! لقد أكملت اللغز بنجاح! 🎉';
+                        }
+                    }
+                });
+            });
+        }
+        
+        // --- اختبار الأبطال الصغير ---
+        const quizQuestions = [
+            { question: "1. المادة التي نتعرف من خلالها على قصص أجدادنا وحياة الناس في الماضي هي:", options: ["الرياضيات", "التاريخ", "العلوم"], answer: "التاريخ" },
+            { question: "2. لرسم مكان وتوضيحه كأننا نراه من الأعلى، نستخدم:", options: ["المخطط", "الآلة الحاسبة", "التليفزيون"], answer: "المخطط" },
+            { question: "3. تساعدنا في معرفة الأماكن والطرق للوصول إليها:", options: ["القصة", "الخريطة", "الأغنية"], answer: "الخريطة" },
+            { question: "4. العلم الذي يدرس الأماكن المختلفة على سطح الأرض هو:", options: ["الجغرافيا", "التاريخ", "الاقتصاد"], answer: "الجغرافيا" },
+            { question: "5. عندما نحافظ على نظافة مدرستنا ونحترم علم بلدنا، نكون:", options: ["مواطنين صالحين", "أطباء", "مهندسين"], answer: "مواطنين صالحين" },
+            { question: "6. ما هو رمز الدولة الذي نحييه كل صباح في المدرسة؟", options: ["شعار المحافظة", "علم مصر", "النشيد الوطني"], answer: "علم مصر" },
+            { question: "7. القرية هي مكان تتركز فيه أنشطة:", options: ["الصناعة والتجارة", "الزراعة وتربية الحيوانات", "السياحة"], answer: "الزراعة وتربية الحيوانات" },
+            { question: "8. عندما نقول \"مدينة الغردقة أجمل مدينة في العالم\"، فهذا يعتبر:", options: ["حقيقة", "رأي", "شائعة"], answer: "رأي" },
+            { question: "9. النسر الموجود في وسط علم مصر يرمز إلى:", options: ["السلام", "القوة", "النقاء"], answer: "القوة" },
+            { question: "10. أي من هؤلاء يستخدم الخريطة لتحديد المواقع العسكرية؟", options: ["الفلاح", "السائح", "الجندي"], answer: "الجندي" }
+        ];
+ 
+        function buildQuiz() {
+            const quizContainer = document.getElementById('quiz-container');
+            quizQuestions.forEach((currentQuestion, questionNumber) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.classList.add('question-block');
+                const questionText = document.createElement('p');
+                questionText.classList.add('font-bold', 'text-lg', 'mb-3');
+                questionText.innerText = currentQuestion.question;
+                questionDiv.appendChild(questionText);
+                const optionsDiv = document.createElement('div');
+                optionsDiv.classList.add('space-y-2');
+                currentQuestion.options.forEach(option => {
+                    const label = document.createElement('label');
+                    label.classList.add('flex', 'items-center', 'p-3', 'rounded-lg', 'border', 'border-gray-200', 'cursor-pointer', 'hover:bg-blue-50', 'transition-colors');
+                    const radio = document.createElement('input');
+                    radio.type = 'radio';
+                    radio.name = `question${questionNumber}`;
+                    radio.value = option;
+                    radio.classList.add('ml-3');
+                    label.appendChild(radio);
+                    label.append(option);
+                    optionsDiv.appendChild(label);
+                });
+                questionDiv.appendChild(optionsDiv);
+                quizContainer.appendChild(questionDiv);
+            });
+        }
+ 
+        function checkQuiz() {
+            let score = 0;
+            const quizResult = document.getElementById('quiz-result');
+            const questionBlocks = document.querySelectorAll('.question-block');
+            quizQuestions.forEach((currentQuestion, questionNumber) => {
+                const questionBlock = questionBlocks[questionNumber];
+                const labels = questionBlock.querySelectorAll('label');
+                const selector = `input[name=question${questionNumber}]:checked`;
+                const userAnswerNode = (questionBlock.querySelector(selector) || {});
+                const userAnswer = userAnswerNode.value;
+                labels.forEach(label => {
+                    label.classList.remove('correct-answer', 'wrong-answer');
+                    const radio = label.querySelector('input');
+                    if (radio.value === currentQuestion.answer) {
+                        label.classList.add('correct-answer');
+                    }
+                });
+                if (userAnswer === currentQuestion.answer) {
+                    score++;
+                } else if (userAnswer) {
+                     const wrongLabel = userAnswerNode.parentElement;
+                     wrongLabel.classList.add('wrong-answer');
+                }
+            });
+            quizResult.innerText = `نتيجتك هي: ${score} من ${quizQuestions.length}! عمل رائع يا بطل!`;
+        }
+        
+        // Initialize all scripts after the page loads
+        document.addEventListener('DOMContentLoaded', (event) => {
+            buildQuiz();
+            initializeDragAndDrop();
+        });
+    </script>
+ 
+</body>
+</html>
+ 
+ 
